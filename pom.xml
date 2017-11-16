@@ -1,0 +1,84 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.sks.learn</groupId>
+	<artifactId>soap-service</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>soap-service Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<cxf.version>3.2.1</cxf.version>
+		<spring.version>5.0.1.RELEASE</spring.version>
+		<junit.version>4.12</junit.version>
+	</properties>
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxws -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<!-- spring-context provides Application Context, that is Spring's Dependency 
+			Injection Container -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- spring-web provides core HTTP integration, including some handy Servlet 
+			filters, Spring HTTP Invoker, infrastructure to integrate with other web 
+			frameworks and HTTP technologies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>soap-service</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-java2ws-plugin</artifactId>
+				<version>${cxf.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.cxf</groupId>
+						<artifactId>cxf-rt-frontend-jaxws</artifactId>
+						<version>${cxf.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.cxf</groupId>
+						<artifactId>cxf-rt-frontend-simple</artifactId>
+						<version>${cxf.version}</version>
+					</dependency>
+				</dependencies>
+
+				<executions>
+					<execution>
+						<id>process-classes</id>
+						<phase>process-classes</phase>
+						<configuration>
+							<className>com.sks.learn.soap.rpc.RpcStyleSoap</className>
+							<genWsdl>true</genWsdl>
+							<verbose>true</verbose>
+						</configuration>
+						<goals>
+							<goal>java2ws</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
